@@ -39,7 +39,7 @@
     "vmName": "[concat(parameters('dnsNamePrefix'), '-mn')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
-    "storageAccountName": "[concat('nn', parameters('storageAccount').prefix)]",
+    "storageAccountName": "[parameters('storageAccount').prefix]",
     "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-mn-sg')]"
   },
   "resources": [
@@ -233,15 +233,6 @@
             }
           }
         ]
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('storageAccountName')]",
-      "apiVersion": "[parameters('resourceAPIVersion')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "accountType": "[parameters('storageAccount').type]"
       }
     },
     {

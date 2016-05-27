@@ -320,11 +320,29 @@
       }
     },
     {
+      "name": "storage-accounts",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('templateAPIVersion')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('share-resourcesUri')]",
+          "contentVersion": "1.0.0.1"
+        },
+        "parameters": {
+          "storageAccount": {
+            "value": "[variables('storageAccount')]"
+          }
+        }
+      }
+    },  
+    {
       "name": "master-node",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('templateAPIVersion')]",
       "dependsOn": [
-        "Microsoft.Resources/deployments/shared-resources"
+        "Microsoft.Resources/deployments/shared-resources",
+        "Microsoft.Resources/deployments/storage-accounts"  
       ],
       "properties": {
         "mode": "Incremental",
@@ -371,7 +389,8 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('templateAPIVersion')]",
       "dependsOn": [
-        "Microsoft.Resources/deployments/shared-resources"
+        "Microsoft.Resources/deployments/shared-resources",
+        "Microsoft.Resources/deployments/storage-accounts" 
       ],
       "properties": {
         "mode": "Incremental",
