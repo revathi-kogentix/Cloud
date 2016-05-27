@@ -243,6 +243,7 @@
     "subnetPrefix":"[parameters('subnetPrefix')]",
     "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/master/templates/azure/cloudera",
     "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-', parameters('vnetNewOrExisting'), '-vnet.json')]",
+    "storage-accountsUri": "[concat(variables('scriptsUri'), '/storage-accounts.json')]",   
     "data-nodeUri":"[concat(variables('scriptsUri'), '/data-node-', toLower(subString(parameters('vmSize'), 9, 4)), '.json')]",
     "sa": "[parameters('masterNodeIPAddress')]",
     "ipOctet01": "[concat(split(variables('sa'), '.')[0], '.', split(variables('sa'), '.')[1], '.')]",
@@ -326,7 +327,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('share-resourcesUri')]",
+          "uri": "[variables('storage-accountsUri')]",
           "contentVersion": "1.0.0.1"
         },
         "parameters": {
