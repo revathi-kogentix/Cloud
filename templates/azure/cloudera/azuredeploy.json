@@ -42,7 +42,7 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "westeurope",
+      "defaultValue": "eastus2",
       "allowedValues": [
         "westus",
         "eastus",
@@ -259,9 +259,9 @@
       "highAvailability": "false"
     },
     "clusterTshirtSizeProd": {
-      "masterNodeCount": 3,
+      "masterNodeCount": 1,
       "dataNodeCount": "[parameters('numberOfDataNodes')]",
-      "highAvailability": "true"
+      "highAvailability": "false"
     },
     "clusterSpec": "[variables(concat('clusterTshirtSize', parameters('tshirtSize')))]",
     "vmSpec": {
