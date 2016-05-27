@@ -5,6 +5,9 @@
     "resourceAPIVersion":{
       "type":"string"
     },
+    "location": {
+      "type": "string"
+    },      
     "storageAccount": {
       "type": "object"
     }  

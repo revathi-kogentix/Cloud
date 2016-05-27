@@ -331,6 +331,12 @@
           "contentVersion": "1.0.0.1"
         },
         "parameters": {
+          "resourceAPIVersion":{
+            "value":"[variables('resourceAPIVersion')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },            
           "storageAccount": {
             "value": "[variables('storageAccount')]"
           }
