@@ -278,7 +278,8 @@
     },  
     "storageAccount": {
       "prefix": "[parameters('storageAccountPrefix')]",
-      "type": "[parameters('storageAccountType')]"
+      "type": "[parameters('storageAccountType')]",
+      "countAll":  "[variables('clusterSizes')[parameters('clusterSize')].storageAccountsCount]"   
     },
     "clusterTshirtSizeEval": {
       "masterNodeCount": 1,
