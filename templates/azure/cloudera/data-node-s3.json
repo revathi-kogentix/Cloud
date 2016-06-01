@@ -360,7 +360,7 @@
               "diskSizeGB": "1023",
               "lun": 10,
               "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds10/', variables('vmName'), copyIndex(), '-datadisk9.vhd')]"
+                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds10/', variables('vmName'), copyIndex(), '-datadisk10.vhd')]"
               },
               "createOption": "Empty"
             },
@@ -369,7 +369,7 @@
               "diskSizeGB": "1023",
               "lun": 11,
               "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds11/', variables('vmName'), copyIndex(), '-datadisk9.vhd')]"
+                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds11/', variables('vmName'), copyIndex(), '-datadisk11.vhd')]"
               },
               "createOption": "Empty"
             },
@@ -378,7 +378,7 @@
               "diskSizeGB": "1023",
               "lun": 12,
               "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds12/', variables('vmName'), copyIndex(), '-datadisk9.vhd')]"
+                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds12/', variables('vmName'), copyIndex(), '-datadisk12.vhd')]"
               },
               "createOption": "Empty"
             },
@@ -387,7 +387,7 @@
               "diskSizeGB": "1023",
               "lun": 13,
               "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds13/', variables('vmName'), copyIndex(), '-datadisk9.vhd')]"
+                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds13/', variables('vmName'), copyIndex(), '-datadisk13.vhd')]"
               },
               "createOption": "Empty"
             },
@@ -396,7 +396,7 @@
               "diskSizeGB": "1023",
               "lun": 14,
               "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds14/', variables('vmName'), copyIndex(), '-datadisk9.vhd')]"
+                "Uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds14/', variables('vmName'), copyIndex(), '-datadisk14.vhd')]"
               },
               "createOption": "Empty"
             }  
