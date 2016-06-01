@@ -14,7 +14,7 @@
       "metadata": {
         "description": "Cluster size, all nodes have 1 master node"
       }
-    }      
+    },      
     "adminUserName": {
       "type": "string",
       "defaultValue": "azureuser",
