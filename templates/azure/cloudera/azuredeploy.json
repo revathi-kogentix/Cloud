@@ -2,6 +2,19 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
   "contentVersion": "1.0.0.1",
   "parameters": {
+    "clusterSize": {
+      "type": "string",
+      "defaultValue": "S3",
+      "allowedValues": [
+        "S3",
+        "S5",
+        "S9", 
+        "S17"
+      ],    
+      "metadata": {
+        "description": "Cluster size, all nodes have 1 master node"
+      }
+    }      
     "adminUserName": {
       "type": "string",
       "defaultValue": "azureuser",
@@ -250,13 +263,31 @@
     "ipOctet2": "[int(split(variables('sa'), '.')[2])]",
     "ipOctet3": "[int(split(variables('sa'), '.')[3])]",
     "datanodeIpOctet3":"[add(int(split(variables('sa'), '.')[3]), parameters('dataNodeIPOffSetFromMaster'))]",
+    "clusterSizes": {
+        "S3": {
+            "storageAccountsCount": 1,
+            "numberOfDataNodes": 2
+        },
+        "S5": {
+            "storageAccountsCount": 2,
+            "numberOfDataNodes": 4
+        },
+        "S9": {
+            "storageAccountsCount": 3,
+            "numberOfDataNodes": 8
+        },
+        "S17": {
+            "storageAccountsCount": 3,
+            "numberOfDataNodes": 16
+        }        
+    },  
     "storageAccount": {
       "prefix": "[parameters('storageAccountPrefix')]",
       "type": "[parameters('storageAccountType')]"
     },
     "clusterTshirtSizeEval": {
       "masterNodeCount": 1,
-      "dataNodeCount": "[parameters('numberOfDataNodes')]",
+      "dataNodeCount": "[variables('clusterSizes').parameters('clusterSize').numberOfDataNodes]",
       "highAvailability": "false"
     },
     "clusterTshirtSizeProd": {
