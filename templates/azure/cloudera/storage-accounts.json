@@ -14,11 +14,16 @@
   },
   "variables": {
       "storageAccountName": "[parameters('storageAccount').prefix]",
+      "storageAccountsCount": "[parameters('storageAccount').countAll]"
   },
   "resources": [
     {
+      "copy": {
+        "name": "storageAccountLoop",
+        "count": "[variables('storageAccountsCount')]"
+      },    
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('storageAccountName')]",
+      "name": "[concat(variables('storageAccountName'), copyIndex())]",
       "apiVersion": "[parameters('resourceAPIVersion')]",
       "location": "[parameters('location')]",
       "properties": {
