@@ -287,7 +287,7 @@
     },
     "clusterTshirtSizeEval": {
       "masterNodeCount": 1,
-      "dataNodeCount": "[variables('clusterSizes').parameters('clusterSize').numberOfDataNodes]",
+      "dataNodeCount": "[variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes]",
       "highAvailability": "false"
     },
     "clusterTshirtSizeProd": {
