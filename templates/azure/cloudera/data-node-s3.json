@@ -356,7 +356,7 @@
               "createOption": "Empty"
             },
             {
-              "name": "datadisk9",
+              "name": "datadisk10",
               "diskSizeGB": "1023",
               "lun": 10,
               "vhd": {
@@ -365,7 +365,7 @@
               "createOption": "Empty"
             },
             {
-              "name": "datadisk9",
+              "name": "datadisk11",
               "diskSizeGB": "1023",
               "lun": 11,
               "vhd": {
@@ -374,7 +374,7 @@
               "createOption": "Empty"
             },
             {
-              "name": "datadisk9",
+              "name": "datadisk12",
               "diskSizeGB": "1023",
               "lun": 12,
               "vhd": {
@@ -383,7 +383,7 @@
               "createOption": "Empty"
             },
             {
-              "name": "datadisk9",
+              "name": "datadisk13",
               "diskSizeGB": "1023",
               "lun": 13,
               "vhd": {
@@ -392,7 +392,7 @@
               "createOption": "Empty"
             },
             {
-              "name": "datadisk9",
+              "name": "datadisk14",
               "diskSizeGB": "1023",
               "lun": 14,
               "vhd": {
