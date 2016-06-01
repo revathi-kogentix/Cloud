@@ -43,12 +43,14 @@
     },
     "storageAccountPrefix": {
       "type": "string",
+      "defaultValue": "[uniqueString(resourceGroup().id, deployment().name)]",        
       "metadata": {
         "description": "Unique namespace for the Storage Account where the VM disks will be placed (alphahumeric characters only)"
       }
     },
     "dnsNamePrefix": {
       "type": "string",
+      "defaultValue": "[concat('dn',uniqueString(resourceGroup().id, deployment().name))]",    
       "metadata": {
         "description": "Unique public DNS name where the VMs will be exposed"
       }
@@ -151,13 +153,6 @@
       ],
       "metadata": {
         "description": "T-shirt size of the Cloudera cluster (Eval, Prod)"
-      }
-    },
-    "numberOfDataNodes": {
-      "type": "int",
-      "defaultValue": 3,
-      "metadata": {
-        "description": "Number of data nodes for Prod (defaults to 3)"
       }
     },
     "vmSize": {
@@ -292,7 +287,7 @@
     },
     "clusterTshirtSizeProd": {
       "masterNodeCount": 1,
-      "dataNodeCount": "[parameters('numberOfDataNodes')]",
+      "dataNodeCount": "[variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes]",
       "highAvailability": "false"
     },
     "clusterSpec": "[variables(concat('clusterTshirtSize', parameters('tshirtSize')))]",
