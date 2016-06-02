@@ -252,34 +252,34 @@
     "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/master/templates/azure/cloudera",
     "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-', parameters('vnetNewOrExisting'), '-vnet.json')]",
     "storage-accountsUri": "[concat(variables('scriptsUri'), '/storage-accounts.json')]",   
-    "data-nodeUri":"[concat(variables('scriptsUri'), '/data-node-', toLower(parameters('clusterSize')), '.json')]",
+    "data-nodeUri":"[concat(variables('scriptsUri'), '/data-node-', 'linear', '.json')]",
     "sa": "[parameters('masterNodeIPAddress')]",
     "ipOctet01": "[concat(split(variables('sa'), '.')[0], '.', split(variables('sa'), '.')[1], '.')]",
     "ipOctet2": "[int(split(variables('sa'), '.')[2])]",
     "ipOctet3": "[int(split(variables('sa'), '.')[3])]",
     "datanodeIpOctet3":"[add(int(split(variables('sa'), '.')[3]), parameters('dataNodeIPOffSetFromMaster'))]",
     "clusterSizes": {
+        "common": {
+            "numberOfDataDisksPerStorageAccount" : 3,
+        }, 
         "S3": {
-            "storageAccountsCount": 1,
             "numberOfDataNodes": 2
         },
         "S5": {
-            "storageAccountsCount": 2,
             "numberOfDataNodes": 4
         },
         "S9": {
-            "storageAccountsCount": 3,
             "numberOfDataNodes": 8
         },
         "S17": {
-            "storageAccountsCount": 3,
             "numberOfDataNodes": 16
         }        
     },  
     "storageAccount": {
       "prefix": "[parameters('storageAccountPrefix')]",
       "type": "[parameters('storageAccountType')]",
-      "countAll":  "[variables('clusterSizes')[parameters('clusterSize')].storageAccountsCount]"   
+      "disksPerAccount" : "[variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount]",
+      "countAll":  "[add(div(variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes, variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount),1)]"   
     },
     "clusterTshirtSizeEval": {
       "masterNodeCount": 1,
