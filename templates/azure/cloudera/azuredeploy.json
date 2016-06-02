@@ -86,7 +86,7 @@
     },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "clouderavnet",
+      "defaultValue": "[concat('vn_',uniqueString(resourceGroup().id, deployment().name))]",
       "metadata": {
         "description": "The name of the virtual network provisioned for the deployment"
       }
