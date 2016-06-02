@@ -126,7 +126,7 @@
     "resourceAPIVersion":"2015-06-15",
     "installCDH":"True",
     "uniqueIDString": "[uniqueString(resourceGroup().id, deployment().name)]",
-    "dnsNamePrefix": "[variables('uniqueIDString')]",
+    "dnsNamePrefix": "[concat('dn',variables('uniqueIDString'))]",
     "location": "eastus2",
     "storageAccountType": "Premium_LRS",
     "virtualNetworkName": "[concat('vn_',variables('uniqueIDString'))]",
