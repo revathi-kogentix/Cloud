@@ -137,6 +137,7 @@
     "addressPrefix": "10.3.0.0/16",
     "subnetPrefix": "10.3.0.0/16",
     "masterNodeIPAddress":  "10.3.0.4",
+    "dataNodeIPOffSetFromMaster": 5,  
     "tshirtSize": "Eval",
     "vmSize": "Standard_DS14",   
     "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/linearClusterSizing/templates/azure/cloudera",
@@ -147,7 +148,7 @@
     "ipOctet01": "[concat(split(variables('sa'), '.')[0], '.', split(variables('sa'), '.')[1], '.')]",
     "ipOctet2": "[int(split(variables('sa'), '.')[2])]",
     "ipOctet3": "[int(split(variables('sa'), '.')[3])]",
-    "datanodeIpOctet3":"[add(int(split(variables('sa'), '.')[3]), parameters('dataNodeIPOffSetFromMaster'))]",
+    "datanodeIpOctet3":"[add(int(split(variables('sa'), '.')[3]), variables('dataNodeIPOffSetFromMaster'))]",
     "clusterSizes": {
         "common": {
             "numberOfDataDisksPerStorageAccount" : 3
