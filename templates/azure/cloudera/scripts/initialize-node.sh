@@ -113,6 +113,10 @@ cat /etc/selinux/config > /tmp/afterSeLinux.out
 
 /etc/init.d/iptables save
 /etc/init.d/iptables stop
+
+# perform yum updates
+yum update -y
+
 chkconfig iptables off
 
 yum install -y ntp
