@@ -30,19 +30,19 @@
             "1": [
                 {
                     "type": "string",
-                    "value": "[reference(concat(parameters('networkInterfacePrefix'),'0')).ipConfigurations[0].properties.privateIPAddress]"
+                    "value": "[concat(parameters('networkInterfacePrefix'),'0')]"
                 }
             ],
             "2": [
                 {
                     "type": "string",
-                    "value": "[reference(concat(parameters('networkInterfacePrefix'),'1')).ipConfigurations[0].properties.privateIPAddress]"
+                    "value": "[concat(parameters('networkInterfacePrefix'),'0')]"
                 }
             ],
             "3": [
                 {
                     "type": "string",
-                    "value": "[reference(concat(parameters('networkInterfacePrefix'),'2')).ipConfigurations[0].properties.privateIPAddress]"
+                    "value": "[concat(parameters('networkInterfacePrefix'),'0')]"
                 }
             ]
         }
