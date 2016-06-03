@@ -29,20 +29,20 @@
         "ips": {
             "1": [
                 {
-                    "type": "string",
-                    "value": "[concat(parameters('networkInterfacePrefix'),'0')]"
+                    "prop1": "string",
+                    "value1": "[concat(parameters('networkInterfacePrefix'),'0')]"
                 }
             ],
             "2": [
                 {
-                    "type": "string",
-                    "value": "[concat(parameters('networkInterfacePrefix'),'1')]"
+                    "prop1": "string",
+                    "value1": "[concat(parameters('networkInterfacePrefix'),'1')]"
                 }
             ],
             "3": [
                 {
-                    "type": "string",
-                    "value": "[concat(parameters('networkInterfacePrefix'),'2')]"
+                    "prop1": "string",
+                    "value1": "[concat(parameters('networkInterfacePrefix'),'2')]"
                 }
             ]
         }
