@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "numIPs": {
+            "type": "string",
+            "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ],
+            "metadata": {
+                "description": "This parameter allows the user to select the number of ips they want"
+            }
+        },
+        "networkInterfacePrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "networkInterfacePrefix"
+            }
+        }
+    },
+    "variables": {
+        "ipArray": {
+            "1": "[variables('ips')['1']]",
+            "2": "[concat(variables('ips')['1'], variables('ips')['2'])]",
+            "3": "[concat(variables('ips')['1'], variables('ips')['2'], variables('ips')['3'])]"
+        },
+        "ips": {
+            "1": [
+                {
+                    "type": "string",
+                    "value": "[reference(concat(parameters('networkInterfaceName'),'0')).ipConfigurations[0].properties.privateIPAddress]"
+                }
+            ],
+            "2": [
+                {
+                    "type": "string",
+                    "value": "[reference(concat(parameters('networkInterfaceName'),'1')).ipConfigurations[0].properties.privateIPAddress]"
+                }
+            ],
+            "3": [
+                {
+                    "type": "string",
+                    "value": "[reference(concat(parameters('networkInterfaceName'),'2')).ipConfigurations[0].properties.privateIPAddress]"
+                }
+            ]
+        }
+    },
+    "resources": [],
+    "outputs": {
+        "ipsComputed": {
+            "type": "array",
+            "value": "[variables('ipArray')[parameters('numIPs')]]"
+        }
+    }
+}
