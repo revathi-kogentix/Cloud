@@ -37,9 +37,41 @@
     "cmPassword": {
       "type": "securestring",
       "metadata": {
-        "description": "password for the Cloudera Manager (A mix of upper and lower-case characters, digits and symbols)"
+        "description": "Password for the Cloudera Manager (A mix of upper and lower-case characters, digits and symbols)"
       }
     },
+    "vNetName": {
+      "type": "string",
+      "defaultValue": "DesignatedVNet",
+      "metadata": {
+        "description": "Existing vNet name for cluster"
+      }
+    },
+    "vNetResourceGroup": {
+      "type": "string",
+      "defaultValue": "DesignatedVNetResourceGroup",
+      "metadata": {
+        "description": "Existing vNet resource group"
+      }
+    },
+    "vNetSubnet": {
+      "type": "string",
+      "defaultValue": "clouderasubnet",
+      "metadata": {
+        "description": "Existing vNet subnet for cluster"
+      }
+    },
+    "virtualMachineSize": {
+      "type": "string",
+      "defaultValue": "Standard_DS14",
+      "allowedValues": [
+        "Standard_DS13",
+        "Standard_DS14"
+      ],    
+      "metadata": {
+        "description": "Virtual machine size for cluster nodes"
+      }
+    },          
     "company": {
       "type": "string",
       "defaultValue": "Company",
@@ -129,16 +161,16 @@
     "dnsNamePrefix": "[concat('dn',variables('uniqueIDString'))]",
     "location": "eastus2",
     "storageAccountType": "Premium_LRS",
-    "virtualNetworkName": "[concat('vn_',variables('uniqueIDString'))]",
-    "vnetNewOrExisting": "new",
-    "virtualNetworkRGName": "",
-    "subnetName": "clouderasubnet",
+    "virtualNetworkName": "[parameters('vNetName')]",
+    "vnetNewOrExisting": "existing",
+    "virtualNetworkRGName": "[parameters('vNetResourceGroup')]",
+    "subnetName": "[parameters('vNetSubnet')]",
     "addressPrefix": "10.3.0.0/16",
     "subnetPrefix": "10.3.0.0/16",
     "masterNodeIPAddress":  "10.3.0.4",
     "dataNodeIPOffSetFromMaster": 5,  
     "tshirtSize": "Eval",
-    "vmSize": "Standard_DS14",   
+    "vmSize": "[parameters('virtualMachineSize')]",   
     "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/linearClusterSizing/templates/azure/cloudera",
     "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-', variables('vnetNewOrExisting'), '-vnet.json')]",
     "storage-accountsUri": "[concat(variables('scriptsUri'), '/storage-accounts.json')]",   
@@ -374,6 +406,12 @@
           "dnsNamePrefix": {
             "value": "[variables('dnsNamePrefix')]"
           },
+          "masterIPs":{
+              "value":"[reference('master-node').outputs.ipsComputed.value]"
+          },
+          "dataNodesIPs":{
+              "value":"[reference('data-node').outputs.ipsComputed.value]"
+          },    
           "location": {
             "value": "[variables('location')]"
           },

@@ -73,7 +73,7 @@ IFS=','
 for x in $NODE_IPS
 do
   line=$(echo "$x" | sed 's/:/ /' | sed 's/:/ /')
-  echo "$line" >> /etc/hosts
+#  echo "$line" >> /etc/hosts
 done
 IFS=${OIFS}
 

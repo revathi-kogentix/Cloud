@@ -38,25 +38,6 @@ CLUSTERNAME=$NAMEPREFIX
 
 execname=$0
 
-function atoi
-{
-#Returns the integer representation of an IP arg, passed in ascii dotted-decimal notation (x.x.x.x)
-IP=$1; IPNUM=0
-for (( i=0 ; i<4 ; ++i )); do
-((IPNUM+=${IP%%.*}*$((256**$((3-${i}))))))
-IP=${IP#*.}
-done
-echo $IPNUM
-}
-
-function itoa
-{
-#returns the dotted-decimal ascii form of an IP arg passed in integer format
-echo -n $(($(($(($((${1}/256))/256))/256))%256)).
-echo -n $(($(($((${1}/256))/256))%256)).
-echo -n $(($((${1}/256))%256)).
-echo $((${1}%256))
-}
 
 log() {
   echo "$(date): [${execname}] $@" 
@@ -82,41 +63,34 @@ file="/home/$ADMINUSER/.ssh/id_rsa"
 key="/tmp/id_rsa.pem"
 openssl rsa -in $file -outform PEM > $key
 
-#Generate IP Addresses for the cloudera setup
-NODES=()
+#Set etc hosts for each IP address
+#updateEtcHosts "${MASTERIP}"
+IFS=",";read -r -a ips <<< "${WORKERIP}"
+echo "$HOSTIP ${NAMEPREFIX}-mn0.$NAMESUFFIX ${NAMEPREFIX}-mn0" >> /etc/hosts
+let "dataNodesCount = ${#ips[@]} - 1"
+for i in (seq 0 ${dataNodesCount}){
+            echo "${ips[$i]} ${NAMEPREFIX}-dn$i.$NAMESUFFIX ${NAMEPREFIX}-dn$i" >> /etc/hosts
+}
 
-let "NAMEEND=MASTERNODES-1"
-for i in $(seq 1 $NAMEEND)
-do
-  IP=`atoi ${MASTERIP}`
-  let "IP=i+IP"
-  HOSTIP=`itoa ${IP}`
-  NODES+=("$HOSTIP:${NAMEPREFIX}-mn$i.$NAMESUFFIX:${NAMEPREFIX}-mn$i")
-done
+function updateEtcHosts { 
+    IFS=",";read -r -a ips <<< "$@"
+    for ip in "${ips[@]}"
+    do
+        ssh "$ip" << 'ENDSSH'
+        echo "$HOSTIP ${NAMEPREFIX}-mn0.$NAMESUFFIX ${NAMEPREFIX}-mn0" >> /etc/hosts
+        let "dataNodesCount = ${#ips[@]} - 1"
+        for i in (seq 0 ${dataNodesCount}){
+            echo "${ips[$i]} ${NAMEPREFIX}-dn$i.$NAMESUFFIX ${NAMEPREFIX}-dn$i" >> /etc/hosts
+        }
+        ENDSSH
+    done
+}
 
-let "DATAEND=DATANODES-1"
-for i in $(seq 0 $DATAEND)
-do 
-  IP=`atoi ${WORKERIP}`
-  let "IP=i+IP"
-  HOSTIP=`itoa ${IP}`
-  NODES+=("$HOSTIP:${NAMEPREFIX}-dn$i.$NAMESUFFIX:${NAMEPREFIX}-dn$i")
-done
+updateEtcHosts "${WORKERIP}"
 
-IFS=',';NODE_IPS="${NODES[*]}";IFS=$' \t\n'
 
-wip_string=''
-OIFS=$IFS
-IFS=','
-for x in $NODE_IPS
-do
-  log "Workier IP: $x"
-  line=$(echo "$x" | sed 's/:/ /' | sed 's/:/ /')
-  wip_string+=$(echo "$line" | cut -d ' ' -f 1 | sed 's/$/,/')
-  log "current wip_string is: $wip_string"
-done
-IFS=${OIFS}
-worker_ip=$(echo "${wip_string%?}")
+#Use IP Addresses for the cloudera setup, as porvided via input parameter
+worker_ip=${WORKERIP}
 log "Worker ip to be supplied to next script: $worker_ip"
 log "BEGIN: Starting detached script to finalize initialization"
 if [ "$INSTALLCDH" == "True" ]
