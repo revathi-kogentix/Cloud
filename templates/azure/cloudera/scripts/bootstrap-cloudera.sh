@@ -55,38 +55,15 @@ mip=${MASTERIP}
 
 log "set private key"
 #use the key from the key vault as the SSH private key
-openssl rsa -in /var/lib/waagent/*.prv -out /home/$ADMINUSER/.ssh/id_rsa
-chmod 600 /home/$ADMINUSER/.ssh/id_rsa
-chown $ADMINUSER /home/$ADMINUSER/.ssh/id_rsa
+#openssl rsa -in /var/lib/waagent/*.prv -out /home/$ADMINUSER/.ssh/id_rsa
+#chmod 600 /home/$ADMINUSER/.ssh/id_rsa
+#chown $ADMINUSER /home/$ADMINUSER/.ssh/id_rsa
 
 file="/home/$ADMINUSER/.ssh/id_rsa"
 key="/tmp/id_rsa.pem"
 openssl rsa -in $file -outform PEM > $key
 
 #Set etc hosts for each IP address
-#updateEtcHosts "${MASTERIP}"
-IFS=",";read -r -a ips <<< "${WORKERIP}"
-echo "$HOSTIP ${NAMEPREFIX}-mn0.$NAMESUFFIX ${NAMEPREFIX}-mn0" >> /etc/hosts
-let "dataNodesCount = ${#ips[@]} - 1"
-for i in (seq 0 ${dataNodesCount}){
-            echo "${ips[$i]} ${NAMEPREFIX}-dn$i.$NAMESUFFIX ${NAMEPREFIX}-dn$i" >> /etc/hosts
-}
-
-function updateEtcHosts { 
-    IFS=",";read -r -a ips <<< "$@"
-    for ip in "${ips[@]}"
-    do
-        ssh "$ip" << 'ENDSSH'
-        echo "$HOSTIP ${NAMEPREFIX}-mn0.$NAMESUFFIX ${NAMEPREFIX}-mn0" >> /etc/hosts
-        let "dataNodesCount = ${#ips[@]} - 1"
-        for i in (seq 0 ${dataNodesCount}){
-            echo "${ips[$i]} ${NAMEPREFIX}-dn$i.$NAMESUFFIX ${NAMEPREFIX}-dn$i" >> /etc/hosts
-        }
-        ENDSSH
-    done
-}
-
-updateEtcHosts "${WORKERIP}"
 
 
 #Use IP Addresses for the cloudera setup, as porvided via input parameter

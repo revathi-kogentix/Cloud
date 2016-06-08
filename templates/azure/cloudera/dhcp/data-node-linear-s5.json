@@ -412,7 +412,7 @@
     "outputs": {
         "ipsComputed": {
             "type": "string",
-            "value": "[concat(reference(concat(variables('nicName'),'0')).ipConfigurations[0].properties.privateIPAddress,  reference(concat(variables('nicName'),'1')).ipConfigurations[0].properties.privateIPAddress, reference(concat(variables('nicName'),'2')).ipConfigurations[0].properties.privateIPAddress, reference(concat(variables('nicName'),'3')).ipConfigurations[0].properties.privateIPAddress)]"
+            "value": "[concat(reference(concat(variables('nicName'),'0')).ipConfigurations[0].properties.privateIPAddress,',',  reference(concat(variables('nicName'),'1')).ipConfigurations[0].properties.privateIPAddress,',', reference(concat(variables('nicName'),'2')).ipConfigurations[0].properties.privateIPAddress,',', reference(concat(variables('nicName'),'3')).ipConfigurations[0].properties.privateIPAddress)]"
         }
     }
 }

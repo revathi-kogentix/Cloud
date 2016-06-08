@@ -23,26 +23,26 @@
     "variables": {
         "ipArray": {
             "1": "[variables('ips')['1']]",
-            "2": "[concat(variables('ips')['1'], variables('ips')['2'])]",
-            "3": "[concat(variables('ips')['1'], variables('ips')['2'], variables('ips')['3'])]"
+            "2": "[concat(variables('ips')['1'], ',' , variables('ips')['2'])]",
+            "3": "[concat(variables('ips')['1'], ',' variables('ips')['2'], ',', variables('ips')['3'])]"
         },
         "ips": {
             "1": [
                 {
                     "prop1": "string",
-                    "value1": "[concat(parameters('networkInterfacePrefix'),'0')]"
+                    "value1": "concat(parameters('networkInterfacePrefix'),'0')"
                 }
             ],
             "2": [
                 {
                     "prop1": "string",
-                    "value1": "[concat(parameters('networkInterfacePrefix'),'1')]"
+                    "value1": "concat(parameters('networkInterfacePrefix'),'1')"
                 }
             ],
             "3": [
                 {
                     "prop1": "string",
-                    "value1": "[concat(parameters('networkInterfacePrefix'),'2')]"
+                    "value1": "concat(parameters('networkInterfacePrefix'),'2')"
                 }
             ]
         }
@@ -50,7 +50,7 @@
     "resources": [],
     "outputs": {
         "ipsComputed": {
-            "type": "array",
+            "type": "string",
             "value": "[variables('ipArray')[parameters('numIPs')]]"
         }
     }

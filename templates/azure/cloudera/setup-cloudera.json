@@ -18,10 +18,10 @@
             "type": "object"
         },
         "masterIPs": {
-            "value": "[reference('master-node').outputs.ipsComputed.value]"
+            "type": "string"
         },
         "dataNodesIPs": {
-            "value": "[reference('data-node').outputs.ipsComputed.value]"
+            "type": "string"
         },
         "networkSpec": {
             "type": "object"

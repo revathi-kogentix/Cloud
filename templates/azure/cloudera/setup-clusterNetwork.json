@@ -1,0 +1,86 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.1",
+    "parameters": {
+        "resourceAPIVersion": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "dnsNamePrefix": {
+            "type": "string"
+        },
+        "masterIPs": {
+            "type": "string"
+        },
+        "dataNodesIPs": {
+            "type": "string"
+        },
+        "scriptsUri": {
+            "type": "string"
+        },
+        "vmSpec": {
+            "type": "object"
+        },
+        "fqdn": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "masterIP": "[parameters('masterIPs')]",
+        "workerIP": "[parameters('dataNodesIPs')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('dnsNamePrefix'), '-mn0', '/prepareNetwork')]",
+            "apiVersion": "[parameters('resourceAPIVersion')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publisher": "Microsoft.OSTCExtensions",
+                "type": "CustomScriptForLinux",
+                "typeHandlerVersion": "1.4",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "[concat(parameters('scriptsUri'), '/scripts/prepare-clusternetwork.sh')]"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('sh prepare-clusternetwork.sh \"', variables('masterIP'), '\" \"', variables('workerIP'), '\" \"', parameters('dnsNamePrefix'), '\" \"', parameters('fqdn'), ' \"', parameters('vmSpec').adminUserName, '\" >> /home/$ADMINUSER/bootstrap-cloudera.log 2>&1')]",
+                    "Items": {
+                        "AdminUserName": "[parameters('vmSpec').adminUserName]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "[parameters('resourceAPIVersion')]",
+            "copy": {
+                "name": "dataNodeConfigLoop",
+                "count": "[parameters('vmCount')]"
+            },
+            "name": "[concat(parameters('dnsNamePrefix'), '-dn', copyIndex() ,'/prepareNetwork')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publisher": "Microsoft.OSTCExtensions",
+                "type": "CustomScriptForLinux",
+                "typeHandlerVersion": "1.4",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "[concat(parameters('scriptsUri'), '/scripts/prepare-clusternetwork.sh')]"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('sh prepare-clusternetwork.sh \"', variables('masterIP'), '\" \"', variables('workerIP'), '\" \"', parameters('dnsNamePrefix'), '\" \"', parameters('fqdn'), ' \"', parameters('vmSpec').adminUserName, '\" >> /home/$ADMINUSER/bootstrap-cloudera.log 2>&1')]",
+                    "Items": {
+                        "AdminUserName": "[parameters('vmSpec').adminUserName]"
+                    }
+                }
+            }
+        }
+  ]
+}

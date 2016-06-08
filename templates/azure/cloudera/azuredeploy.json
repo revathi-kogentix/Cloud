@@ -386,12 +386,53 @@
       }
     },
     {
-      "name": "setup-cloudera",
+      "name": "setup-clusterNetwork",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('templateAPIVersion')]",
       "dependsOn": [
         "Microsoft.Resources/deployments/data-node",
         "Microsoft.Resources/deployments/master-node"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('scriptsUri'), '/setup-clusterNetwork.json')]",
+          "contentVersion": "1.0.0.1"
+        },
+        "parameters": {
+          "resourceAPIVersion":{
+            "value":"[variables('resourceAPIVersion')]"
+          },    
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "dnsNamePrefix": {
+            "value": "[variables('dnsNamePrefix')]"
+          },
+          "masterIPs":{
+              "value":"[reference('master-node').outputs.ipsComputed.value]"
+          },
+          "dataNodesIPs":{
+              "value":"[reference('data-node').outputs.ipsComputed.value]"
+          },
+          "scriptsUri": {
+            "value": "[variables('scriptsUri')]"
+          },
+          "vmSpec": {
+            "value": "[variables('vmSpec')]"
+          },
+          "fqdn": {
+            "value": "[reference('master-node').outputs.fqdn.value]"
+          }
+        }
+      }
+    },
+    {
+      "name": "setup-cloudera",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('templateAPIVersion')]",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/setup-clusterNetwork"
       ],
       "properties": {
         "mode": "Incremental",
