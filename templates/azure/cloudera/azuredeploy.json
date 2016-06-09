@@ -194,6 +194,7 @@
             "numberOfDataNodes": 16
         }        
     },  
+    "tagAll":{"purpose": "pocDHCP"},
     "storageAccount": {
       "prefix": "[variables('uniqueIDString')]",
       "type": "[variables('storageAccountType')]",
@@ -241,6 +242,9 @@
       "name": "shared-resources",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('templateAPIVersion')]",
+      "tags": {
+        "purpose": "[variables('tagAll').purpose]"
+      },
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -270,6 +274,9 @@
       "name": "storage-accounts",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('templateAPIVersion')]",
+      "tags": {
+        "purpose": "[variables('tagAll').purpose]"
+      },
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -293,6 +300,9 @@
       "name": "master-node",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('templateAPIVersion')]",
+      "tags": {
+        "purpose": "[variables('tagAll').purpose]"
+      },
       "dependsOn": [
         "Microsoft.Resources/deployments/shared-resources",
         "Microsoft.Resources/deployments/storage-accounts"  
@@ -341,6 +351,9 @@
       "name": "data-node",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('templateAPIVersion')]",
+      "tags": {
+        "purpose": "[variables('tagAll').purpose]"
+      },
       "dependsOn": [
         "Microsoft.Resources/deployments/shared-resources",
         "Microsoft.Resources/deployments/storage-accounts" 
@@ -393,6 +406,9 @@
         "Microsoft.Resources/deployments/data-node",
         "Microsoft.Resources/deployments/master-node"
       ],
+      "tags": {
+        "purpose": "[variables('tagAll').purpose]"
+      },
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -434,6 +450,9 @@
       "dependsOn": [
         "Microsoft.Resources/deployments/setup-clusterNetwork"
       ],
+      "tags": {
+        "purpose": "[variables('tagAll').purpose]"
+      },
       "properties": {
         "mode": "Incremental",
         "templateLink": {
