@@ -26,6 +26,9 @@
       "name": "[concat(variables('storageAccountName'), copyIndex())]",
       "apiVersion": "[parameters('resourceAPIVersion')]",
       "location": "[parameters('location')]",
+      "tags": {
+        "purpose": "pocDHCPCluster"
+      },        
       "properties": {
         "accountType": "[parameters('storageAccount').type]"
       }
