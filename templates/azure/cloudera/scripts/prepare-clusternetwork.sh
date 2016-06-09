@@ -30,12 +30,12 @@ function updateEtcHosts {
 }
 
 function configureSSH {
-    pFile='/var/lib/waagent/TransportPrivate.pem'
+    pFile='/var/lib/waagent/*.prv'
     mkdir /home/$ADMINUSER/.ssh
     chown $ADMINUSER /home/$ADMINUSER/.ssh
     chmod 700 /home/$ADMINUSER/.ssh
 
-    ssh-keygen -y -f pFile > /home/$ADMINUSER/.ssh/authorized_keys
+    ssh-keygen -y -f $pFile > /home/$ADMINUSER/.ssh/authorized_keys
     chown $ADMINUSER /home/$ADMINUSER/.ssh/authorized_keys
     chmod 600 /home/$ADMINUSER/.ssh/authorized_keys
     

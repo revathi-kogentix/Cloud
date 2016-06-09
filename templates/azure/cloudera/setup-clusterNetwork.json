@@ -78,7 +78,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh prepare-clusternetwork.sh \"', variables('masterIP'), '\" \"', variables('workerIP'), '\" \"', parameters('dnsNamePrefix'), '\" \"', parameters('fqdn'), ' \"', parameters('vmSpec').adminUserName, '\" >> /home/$ADMINUSER/bootstrap-cloudera.log 2>&1')]",
+                    "commandToExecute": "[concat('sh prepare-clusternetwork.sh \"', variables('masterIP'), '\" \"', variables('workerIP'), '\" \"', parameters('dnsNamePrefix'), '\" \"', parameters('fqdn'), '\" \"', parameters('vmSpec').adminUserName, '\" >> /home/$ADMINUSER/bootstrap-cloudera.log 2>&1')]",
                     "Items": {
                         "AdminUserName": "[parameters('vmSpec').adminUserName]"
                     }
