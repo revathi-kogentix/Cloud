@@ -37,7 +37,7 @@
     "resources": [
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('dnsNamePrefix'), '-mn0', '/prepareNetwork')]",
+            "name": "[concat(parameters('dnsNamePrefix'), '-mn0', '/prepareDisks')]",
             "apiVersion": "[parameters('resourceAPIVersion')]",
             "location": "[parameters('location')]",
             "properties": {
@@ -65,7 +65,7 @@
                 "name": "dataNodeConfigLoop",
                 "count": "[parameters('vmCount')]"
             },
-            "name": "[concat(parameters('dnsNamePrefix'), '-dn', copyIndex() ,'/prepareNetwork')]",
+            "name": "[concat(parameters('dnsNamePrefix'), '-dn', copyIndex() ,'/prepareDisks')]",
             "location": "[parameters('location')]",
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
