@@ -421,6 +421,9 @@
           "vmSpec": {
             "value": "[variables('vmSpec')]"
           },
+          "vmCount": {
+            "value": "[variables('clusterSpec').dataNodeCount]"
+          },
           "fqdn": {
             "value": "[reference('master-node').outputs.fqdn.value]"
           }

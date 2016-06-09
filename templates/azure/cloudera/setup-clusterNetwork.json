@@ -23,6 +23,9 @@
         "vmSpec": {
             "type": "object"
         },
+        "vmCount": {
+            "type": "int"
+        },
         "fqdn": {
             "type": "string"
         }
