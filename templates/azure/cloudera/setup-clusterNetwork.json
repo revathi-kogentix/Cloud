@@ -21,7 +21,7 @@
             "type": "string"
         },
         "vmSpec": {
-            "type": "object"
+            "type": "secureobject"
         },
         "vmCount": {
             "type": "int"

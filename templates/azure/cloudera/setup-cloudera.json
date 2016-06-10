@@ -15,7 +15,7 @@
             "type": "string"
         },
         "vmSpec": {
-            "type": "object"
+            "type": "secureobject"
         },
         "masterIPs": {
             "type": "string"
