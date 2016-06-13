@@ -192,7 +192,7 @@
     "datanodeIpOctet3":"[add(int(split(variables('sa'), '.')[3]), variables('dataNodeIPOffSetFromMaster'))]",
     "clusterSizes": {
         "common": {
-            "numberOfDataDisksPerStorageAccount" : 3
+            "numberOfDataDisksPerStorageAccount" : 6
         }, 
         "S5": {
             "numberOfDataNodes": 4
@@ -345,7 +345,7 @@
             "value": "[variables('clusterSpec')]"
           },
           "OS": {
-            "value": "[variables('OS')]"
+            "value": "[parameters('OS')]"
           }          
         }
       }
@@ -394,6 +394,9 @@
           },
           "clusterSpec": {
             "value": "[variables('clusterSpec')]"
+          },
+          "OS": {
+            "value": "[parameters('OS')]"
           }
         }
       }

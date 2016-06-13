@@ -31,6 +31,16 @@
     },
     "clusterSpec": {
       "type": "object"
+    },
+    "OS": {
+      "type": "string",
+      "allowedValues": [
+            "CentOS6",
+            "RHEL6"
+      ],
+      "metadata": {
+                "description": "This parameter allows the user to select OS"
+      }
     }
   },
   "variables": {
@@ -196,21 +206,35 @@
       }
     },
     {
+      "name": "os-selector",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('templateAPIVersion')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('scriptsUri'), '/supported-os.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "OS":{
+            "value":"[parameters('OS')]"
+          }
+        }
+      }
+    },
+    {
       "apiVersion": "[parameters('resourceAPIVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vmName'), copyIndex())]",
-      "plan": {
-        "name": "cloudera-centos-6",
-        "publisher": "cloudera",
-        "product": "cloudera-centos-6"
-      },
+      "plan": "[reference('os-selector').outputs.OS.plan]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "dataNodeNicLoop",
         "count": "[parameters('vmCount')]"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]"
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]",
+        "Microsoft.Resources/deployments/os-selector"
       ],
       "properties": {
         "availabilitySet": {
@@ -228,18 +252,12 @@
           }
         },
         "storageProfile": {
-          "imageReference":
-          {
-            "publisher": "cloudera",
-            "offer": "cloudera-centos-6",
-            "sku": "CLOUDERA-CENTOS-6",
-            "version": "latest"
-          },
+          "imageReference":"[reference('os-selector').outputs.OS.imageRef]",
           "osDisk":
           {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds/', variables('vmName'), copyIndex(), '.vhd')]"
+              "uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds/', variables('vmName'), copyIndex(), '.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -287,51 +305,6 @@
               "lun": 4,
               "vhd": {
                 "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds4/', variables('vmName'), copyIndex(), '-datadisk4.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk5",
-              "diskSizeGB": "1023",
-              "lun": 5,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds5/', variables('vmName'), copyIndex(), '-datadisk5.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk6",
-              "diskSizeGB": "1023",
-              "lun": 6,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds6/', variables('vmName'), copyIndex(), '-datadisk6.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk7",
-              "diskSizeGB": "1023",
-              "lun": 7,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds7/', variables('vmName'), copyIndex(), '-datadisk7.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk8",
-              "diskSizeGB": "1023",
-              "lun": 8,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds8/', variables('vmName'), copyIndex(), '-datadisk8.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk9",
-              "diskSizeGB": "1023",
-              "lun": 9,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds9/', variables('vmName'), copyIndex(), '-datadisk9.vhd')]"
               },
               "createOption": "Empty"
             }

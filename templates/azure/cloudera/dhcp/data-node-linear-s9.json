@@ -239,7 +239,7 @@
           {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://', variables('storageAccountName'), '0.blob.core.windows.net/vhds/', variables('vmName'), copyIndex(), '.vhd')]"
+              "uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds/', variables('vmName'), copyIndex(), '.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -287,51 +287,6 @@
               "lun": 4,
               "vhd": {
                 "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds4/', variables('vmName'), copyIndex(), '-datadisk4.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk5",
-              "diskSizeGB": "1023",
-              "lun": 5,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds5/', variables('vmName'), copyIndex(), '-datadisk5.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk6",
-              "diskSizeGB": "1023",
-              "lun": 6,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds6/', variables('vmName'), copyIndex(), '-datadisk6.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk7",
-              "diskSizeGB": "1023",
-              "lun": 7,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds7/', variables('vmName'), copyIndex(), '-datadisk7.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk8",
-              "diskSizeGB": "1023",
-              "lun": 8,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds8/', variables('vmName'), copyIndex(), '-datadisk8.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk9",
-              "diskSizeGB": "1023",
-              "lun": 9,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds9/', variables('vmName'), copyIndex(), '-datadisk9.vhd')]"
               },
               "createOption": "Empty"
             }
