@@ -71,7 +71,17 @@
       "metadata": {
         "description": "Virtual machine size for cluster nodes"
       }
-    },          
+    },
+    "OS": {
+        "type": "string",
+        "allowedValues": [
+            "CentOS6",
+            "RHEL6"
+        ],
+        "metadata": {
+                "description": "This parameter allows the user to select OS"
+        }
+    },
     "company": {
       "type": "string",
       "defaultValue": "Company",
@@ -333,7 +343,10 @@
           },
           "clusterSpec": {
             "value": "[variables('clusterSpec')]"
-          }
+          },
+          "OS": {
+            "value": "[variables('OS')]"
+          }          
         }
       }
     },

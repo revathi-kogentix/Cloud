@@ -31,6 +31,16 @@
     },
     "clusterSpec": {
       "type": "object"
+    },
+    "OS": {
+      "type": "string",
+      "allowedValues": [
+            "CentOS6",
+            "RHEL6"
+      ],
+      "metadata": {
+                "description": "This parameter allows the user to select OS"
+      }
     }
   },
   "variables": {
@@ -285,21 +295,35 @@
       }
     },
     {
+      "name": "os-selector",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('templateAPIVersion')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('scriptsUri'), '/supported-os.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "OS":{
+            "value":"[parameters('OS')]"
+          }
+        }
+      }
+    },
+    {
       "apiVersion": "[parameters('resourceAPIVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vmName'), copyIndex())]",
-      "plan": {
-        "name": "cloudera-centos-6",
-        "publisher": "cloudera",
-        "product": "cloudera-centos-6"
-      },
+      "plan": "[reference('os-selector').outputs.OS.plan]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "masterNodeNicLoop",
         "count": "[parameters('vmCount')]"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]"
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]",
+        "Microsoft.Resources/deployments/os-selector"  
       ],
       "properties": {
         "availabilitySet": {
@@ -317,13 +341,7 @@
           }
         },
         "storageProfile": {
-          "imageReference":
-          {
-            "publisher": "cloudera",
-            "offer": "cloudera-centos-6",
-            "sku": "CLOUDERA-CENTOS-6",
-            "version": "latest"
-          },
+          "imageReference":"[reference('os-selector').outputs.OS.imageRef]",
           "osDisk":
           {
             "name": "osdisk",
