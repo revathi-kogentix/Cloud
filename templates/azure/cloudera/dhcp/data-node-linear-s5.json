@@ -32,6 +32,9 @@
     "clusterSpec": {
       "type": "object"
     },
+    "templateAPIVersion":{
+      "type":"string"
+    },
     "OS": {
       "type": "string",
       "allowedValues": [
@@ -209,6 +212,7 @@
     {
       "name": "os-selector",
       "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[parameters('templateAPIVersion')]",
       "properties": {
         "mode": "Incremental",
         "templateLink": {

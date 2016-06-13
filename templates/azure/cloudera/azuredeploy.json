@@ -345,6 +345,9 @@
           "clusterSpec": {
             "value": "[variables('clusterSpec')]"
           },
+          "templateAPIVersion":{
+            "value":"[variables('templateAPIVersion')]"
+          },              
           "OS": {
             "value": "[variables('OS')]"
           }          
@@ -395,6 +398,9 @@
           },
           "clusterSpec": {
             "value": "[variables('clusterSpec')]"
+          },
+          "templateAPIVersion":{
+            "value":"[variables('templateAPIVersion')]"
           },
           "OS": {
             "value": "[variables('OS')]"
