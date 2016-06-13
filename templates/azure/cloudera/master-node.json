@@ -349,7 +349,7 @@
           }
         },
         "storageProfile": {
-          "imageReference":"[reference('os-selector').outputs.OS.value.imageRef]",
+          "imageReference":"[reference('os-selectorMaster').outputs.OS.value.imageRef]",
           "osDisk":
           {
             "name": "osdisk",
