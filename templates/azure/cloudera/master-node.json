@@ -299,7 +299,7 @@
       }
     },
     {
-      "name": "os-selector",
+      "name": "os-selectorMaster",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[parameters('templateAPIVersion')]",
       "properties": {
@@ -331,7 +331,7 @@
       },
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]",
-        "Microsoft.Resources/deployments/os-selector"  
+        "Microsoft.Resources/deployments/os-selectorMaster"  
       ],
       "properties": {
         "availabilitySet": {
