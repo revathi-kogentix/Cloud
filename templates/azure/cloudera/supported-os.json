@@ -35,9 +35,9 @@
                     "product": "cloudera-centos-6"
                 },
                 "imageRef": {
-                    "publisher": "cloudera",
-                    "offer": "cloudera-centos-6",
-                    "sku": "CLOUDERA-CENTOS-6",
+                    "publisher": "Redhat",
+                    "offer": "RHEL",
+                    "sku": "6.7",
                     "version": "latest"
                 }
             }
