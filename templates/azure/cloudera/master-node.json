@@ -50,7 +50,8 @@
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
     "storageAccountName": "[parameters('storageAccount').prefix]",
-    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-mn-sg')]"
+    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-mn-sg')]",
+    "OS": "[parameters('OS')]"  
   },
   "resources": [
     {
@@ -306,7 +307,7 @@
         },
         "parameters": {
           "OS":{
-            "value":"[parameters('OS')]"
+            "value":"[variables('OS')]"
           }
         }
       }

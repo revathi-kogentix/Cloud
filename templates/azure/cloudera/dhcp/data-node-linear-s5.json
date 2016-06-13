@@ -51,7 +51,8 @@
     "storageAccountName": "[parameters('storageAccount').prefix]",
     "disksPerAccount": "[parameters('storageAccount').disksPerAccount]",
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
-    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-dn-sg')]"
+    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-dn-sg')]",
+    "OS": "[parameters('OS')]"  
   },
   "resources": [
     {
@@ -217,7 +218,7 @@
         },
         "parameters": {
           "OS":{
-            "value":"[parameters('OS')]"
+            "value":"[variables('OS')]"
           }
         }
       }

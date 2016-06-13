@@ -210,6 +210,7 @@
       "disksPerAccount" : "[variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount]",
       "countAll":  "[add(div(variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes, variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount),1)]"   
     },
+    "OS": "[parameters('OS')]",   
     "clusterTshirtSizeEval": {
       "masterNodeCount": 1,
       "dataNodeCount": "[variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes]",
@@ -345,7 +346,7 @@
             "value": "[variables('clusterSpec')]"
           },
           "OS": {
-            "value": "[parameters('OS')]"
+            "value": "[variables('OS')]"
           }          
         }
       }
@@ -396,7 +397,7 @@
             "value": "[variables('clusterSpec')]"
           },
           "OS": {
-            "value": "[parameters('OS')]"
+            "value": "[variables('OS')]"
           }
         }
       }
