@@ -209,7 +209,6 @@
     {
       "name": "os-selector",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "[variables('templateAPIVersion')]",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
