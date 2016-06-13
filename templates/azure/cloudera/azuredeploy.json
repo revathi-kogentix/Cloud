@@ -530,5 +530,15 @@
         }
       }
     }
-  ]
+  ],
+  "outputs": {
+      "masterNode": {
+          "type": "string",
+          "value": "[reference('master-node').outputs.fqdn.value]"
+      },
+      "adminWeb": {
+          "type": "string",
+          "value": "[concat('http://', reference('master-node').outputs.fqdn.value, ':7180')]"
+      },      
+  }
 }
