@@ -63,21 +63,18 @@
     },
     "customImageAccount": {
       "type": "string",
-      "defaultValue": "yourCustomImageAccount",
       "metadata": {
         "description": "StorageAccount with Custom Images"
       }
     },
     "customImagePathMaster": {
       "type": "string",
-      "defaultValue": "yourMasterCustomImagePath",
       "metadata": {
         "description": "Master custom image path"
       }
     },
     "customImagePathNode": {
       "type": "string",
-      "defaultValue": "yourNodeCustomImagePath",
       "metadata": {
         "description": "Node custom image path"
       }
@@ -374,7 +371,13 @@
           },              
           "OS": {
             "value": "[variables('OS')]"
-          }          
+          },
+          "customImage": {
+            "value": "[variables('masterCustomImage')]"
+          },
+          "customImageOSDiskContainer": {
+            "value": "[variables('customImageOSDiskContainer')]"
+          }  
         }
       }
     },
@@ -428,7 +431,13 @@
           },
           "OS": {
             "value": "[variables('OS')]"
-          }
+          },
+          "customImage": {
+            "value": "[variables('nodeCustomImage')]"
+          },
+          "customImageOSDiskContainer": {
+            "value": "[variables('customImageOSDiskContainer')]"
+          }  
         }
       }
     },
