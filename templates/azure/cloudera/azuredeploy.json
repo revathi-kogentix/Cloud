@@ -202,7 +202,7 @@
     "dataNodeIPOffSetFromMaster": 5,  
     "tshirtSize": "Eval",
     "vmSize": "[parameters('virtualMachineSize')]",   
-    "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/linearSizingDHCPTesting/templates/azure/cloudera",
+    "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/linearDHCPCustomImage/templates/azure/cloudera",
     "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-', variables('vnetNewOrExisting'), '-vnet.json')]",
     "storage-accountsUri": "[concat(variables('scriptsUri'), '/storage-accounts.json')]",   
     "data-nodeUri":"[concat(variables('scriptsUri'), '/dhcp/data-node-linear-', toLower(parameters('clusterSize')), '.json')]",
