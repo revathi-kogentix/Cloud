@@ -61,6 +61,27 @@
         "description": "Existing vNet subnet for cluster"
       }
     },
+    "customImageAccount": {
+      "type": "string",
+      "defaultValue": "yourCustomImageAccount",
+      "metadata": {
+        "description": "StorageAccount with Custom Images"
+      }
+    },
+    "customImagePathMaster": {
+      "type": "string",
+      "defaultValue": "yourMasterCustomImagePath",
+      "metadata": {
+        "description": "Master custom image path"
+      }
+    },
+    "customImagePathNode": {
+      "type": "string",
+      "defaultValue": "yourNodeCustomImagePath",
+      "metadata": {
+        "description": "Node custom image path"
+      }
+    },
     "virtualMachineSize": {
       "type": "string",
       "defaultValue": "Standard_DS14",
@@ -185,6 +206,9 @@
     "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-', variables('vnetNewOrExisting'), '-vnet.json')]",
     "storage-accountsUri": "[concat(variables('scriptsUri'), '/storage-accounts.json')]",   
     "data-nodeUri":"[concat(variables('scriptsUri'), '/dhcp/data-node-linear-', toLower(parameters('clusterSize')), '.json')]",
+    "masterCustomImage":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/', parameters('customImagePathMaster'))]",
+    "nodeCustomImage":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/', parameters('customImagePathNode'))]",
+    "customImageOSDiskContainer":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/computevhds/')]",  
     "sa": "[variables('masterNodeIPAddress')]",
     "ipOctet01": "[concat(split(variables('sa'), '.')[0], '.', split(variables('sa'), '.')[1], '.')]",
     "ipOctet2": "[int(split(variables('sa'), '.')[2])]",
@@ -539,6 +563,6 @@
       "adminWeb": {
           "type": "string",
           "value": "[concat('http://', reference('master-node').outputs.fqdn.value, ':7180')]"
-      },      
+      }      
   }
 }

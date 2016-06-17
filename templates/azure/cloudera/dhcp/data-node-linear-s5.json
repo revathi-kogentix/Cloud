@@ -44,6 +44,12 @@
       "metadata": {
                 "description": "This parameter allows the user to select OS"
       }
+    },
+    "customImage": {
+      "type":"string"
+    },
+    "customImageOSDiskContainer": {
+      "type":"string"
     }
   },
   "variables": {
@@ -230,11 +236,6 @@
       "apiVersion": "[parameters('resourceAPIVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vmName'), copyIndex())]",
-      "plan": {
-          "name": "cloudera-centos-6",
-          "publisher": "cloudera",
-          "product": "cloudera-centos-6"
-      },
       "location": "[parameters('location')]",
       "copy": {
         "name": "dataNodeNicLoop",
@@ -260,12 +261,15 @@
           }
         },
         "storageProfile": {
-          "imageReference":"[reference('os-selector').outputs.OS.value.imageRef]",
           "osDisk":
           {
             "name": "osdisk",
+            "osType": "Linux",
+            "image": {
+                "uri": "[parameters('customImage')]"
+            },
             "vhd": {
-              "uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds/', variables('vmName'), copyIndex(), '.vhd')]"
+              "uri": "[concat(parameters('customImageOSDiskContainer'), variables('vmName'), copyIndex(), '.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
