@@ -190,7 +190,8 @@
     "data-nodeUri":"[concat(variables('scriptsUri'), '/dhcp/data-node-linear-', toLower(parameters('clusterSize')), '.json')]",
     "masterCustomImage":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/', parameters('customImagePathMaster'))]",
     "nodeCustomImage":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/', parameters('customImagePathNode'))]",
-    "customImageOSDiskContainer":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/computevhds/')]",  
+    "customImageOSDiskContainer":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/computevhds/')]",
+    "customImageMasterDataDiskContainerPrefix":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/vhdsmn')]",  
     "clusterSizes": {
         "common": {
             "numberOfDataDisksPerStorageAccount" : 6
@@ -342,7 +343,10 @@
           },
           "customImageOSDiskContainer": {
             "value": "[variables('customImageOSDiskContainer')]"
-          }  
+          },
+          "dataDiskContainerPrefix": {
+            "value": "[variables('customImageMasterDataDiskContainerPrefix')]"
+          }   
         }
       }
     },
