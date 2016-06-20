@@ -46,9 +46,7 @@
       }
     },
     "diskSizeGB": {
-      "type": "int",
-      "minValue": 1,
-      "maxValue": 1023,
+      "type": "string",
       "metadata": {
         "description": "Size of the data disks"
       }
