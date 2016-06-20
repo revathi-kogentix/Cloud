@@ -224,7 +224,7 @@
     "customImageMasterDataDiskContainerPrefix":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/vhdsmn')]",  
     "clusterSizes": {
         "common": {
-            "numberOfDataDisksPerStorageAccount" : 7
+            "numberOfDataNodesPerStorageAccount" : 7
         }, 
         "S5": {
             "numberOfDataNodes": 4
@@ -241,8 +241,8 @@
       "type": "[variables('storageAccountType')]",
       "dataDiskSize":"[parameters('dataDiskSize')]",
       "dataDisksPerNode":"[parameters('dataDisksPerNode')]",    
-      "disksPerAccount" : "[variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount]",
-      "countAll":  "[add(div(variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes, variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount),1)]"   
+      "dataNodesPerAccount" : "[variables('clusterSizes')['common'].numberOfDataNodesPerStorageAccount]",
+      "countAll":  "[add(div(variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes, variables('clusterSizes')['common'].numberOfDataNodesPerStorageAccount),1)]"   
     },  
     "clusterTshirtSizeEval": {
       "masterNodeCount": 1,

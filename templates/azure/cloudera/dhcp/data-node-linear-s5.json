@@ -46,7 +46,7 @@
     "vmName": "[concat(parameters('dnsNamePrefix'), '-dn')]",
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "storageAccountName": "[parameters('storageAccount').prefix]",
-    "disksPerAccount": "[parameters('storageAccount').disksPerAccount]",
+    "dataNodesPerAccount": "[parameters('storageAccount').dataNodesPerAccount]",
     "dataDiskSize": "[parameters('storageAccount').dataDiskSize]",
     "dataDisksPerNode": "[parameters('storageAccount').dataDisksPerNode]",    
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
@@ -227,7 +227,7 @@
             "value":"None"
           },
           "diskStorageAccountName": {
-            "value":"[concat(variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')))]"
+            "value":"[concat(variables('storageAccountName'), div(copyIndex(),variables('dataNodesPerAccount')))]"
           },
           "diskSizeGB": {
             "value":"[variables('dataDiskSize')]"  
