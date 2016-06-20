@@ -483,9 +483,6 @@
           "vmSpec": {
             "value": "[variables('vmSpec')]"
           },
-          "networkSpec": {
-            "value": "[variables('networkSpec')]"
-          },
           "clusterSpec": {
             "value": "[variables('clusterSpec')]"
           },

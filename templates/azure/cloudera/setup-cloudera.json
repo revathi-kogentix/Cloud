@@ -23,9 +23,6 @@
         "dataNodesIPs": {
             "type": "string"
         },
-        "networkSpec": {
-            "type": "object"
-        },
         "clusterSpec": {
             "type": "object"
         },
