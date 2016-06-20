@@ -65,9 +65,7 @@
     },  
     "dataDisksPerNode":{
       "type": "string",
-      "defaultValue": "6",
-      "minValue": 2,
-      "maxValue": 10,    
+      "defaultValue": "6",   
       "metadata": {
         "description": "Number of data disks per data node in cluster"
       }        
