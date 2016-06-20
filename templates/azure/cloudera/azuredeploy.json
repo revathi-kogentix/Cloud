@@ -90,16 +90,6 @@
         "description": "Virtual machine size for cluster nodes"
       }
     },
-    "OS": {
-        "type": "string",
-        "allowedValues": [
-            "CentOS6",
-            "RHEL6"
-        ],
-        "metadata": {
-                "description": "This parameter allows the user to select OS"
-        }
-    },
     "company": {
       "type": "string",
       "defaultValue": "Company",
@@ -230,8 +220,7 @@
       "type": "[variables('storageAccountType')]",
       "disksPerAccount" : "[variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount]",
       "countAll":  "[add(div(variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes, variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount),1)]"   
-    },
-    "OS": "[parameters('OS')]",   
+    },  
     "clusterTshirtSizeEval": {
       "masterNodeCount": 1,
       "dataNodeCount": "[variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes]",
@@ -368,9 +357,6 @@
           },
           "templateAPIVersion":{
             "value":"[variables('templateAPIVersion')]"
-          },              
-          "OS": {
-            "value": "[variables('OS')]"
           },
           "customImage": {
             "value": "[variables('masterCustomImage')]"
@@ -428,9 +414,6 @@
           },
           "templateAPIVersion":{
             "value":"[variables('templateAPIVersion')]"
-          },
-          "OS": {
-            "value": "[variables('OS')]"
           },
           "customImage": {
             "value": "[variables('nodeCustomImage')]"

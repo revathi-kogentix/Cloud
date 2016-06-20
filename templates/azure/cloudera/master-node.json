@@ -35,16 +35,6 @@
     "templateAPIVersion":{
       "type":"string"
     },
-    "OS": {
-      "type": "string",
-      "allowedValues": [
-            "CentOS6",
-            "RHEL6"
-      ],
-      "metadata": {
-                "description": "This parameter allows the user to select OS"
-      }
-    },
     "customImage": {
       "type":"string"
     },
@@ -59,8 +49,7 @@
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
     "storageAccountName": "[parameters('storageAccount').prefix]",
-    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-mn-sg')]",
-    "OS": "[parameters('OS')]"  
+    "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-mn-sg')]"
   },
   "resources": [
     {
@@ -301,23 +290,6 @@
         ],
         "networkSecurityGroup": {
           "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('securityGroupName'))]"
-        }
-      }
-    },
-    {
-      "name": "os-selectorMaster",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "[parameters('templateAPIVersion')]",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('scriptsUri'), '/supported-os.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "OS":{
-            "value":"[variables('OS')]"
-          }
         }
       }
     },

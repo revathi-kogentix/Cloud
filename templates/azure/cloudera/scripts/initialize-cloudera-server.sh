@@ -77,10 +77,10 @@ if [ $n -ge 5 ]; then log "scp error $remote, exiting..." & exit 1; fi
 
 #######################################################################################################################
 log "installing external DB"
-sudo yum install postgresql-server -y
+yum install postgresql-server -y
 bash install-postgresql.sh >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
 #restart to make sure all configuration take effects
-sudo service postgresql restart
+service postgresql restart
 
 log "finished installing external DB"
 #######################################################################################################################
@@ -100,8 +100,8 @@ log "END: master node deployments"
 
 
 
-# Set up python
-rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
+# Set up python,  epel and pyhton are part of image
+# rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
 yum -y install python-pip >> /tmp/initialize-cloudera-server.log
 pip install cm_api >> /tmp/initialize-cloudera-server.log
 
