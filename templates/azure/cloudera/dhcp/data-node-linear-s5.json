@@ -47,7 +47,8 @@
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "storageAccountName": "[parameters('storageAccount').prefix]",
     "disksPerAccount": "[parameters('storageAccount').disksPerAccount]",
-    "dataDiskSize": "[parameters('storageAccount').dataDiskSize]",  
+    "dataDiskSize": "[parameters('storageAccount').dataDiskSize]",
+    "dataDisksPerNode": "[parameters('storageAccount').dataDisksPerNode]",    
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
     "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-dn-sg')]"
   },
@@ -205,6 +206,40 @@
     },
     {
       "apiVersion": "[parameters('resourceAPIVersion')]",
+      "type": "Microsoft.Resources/deployments",
+      "name": "[concat(variables('vmName'), '-disks-', copyIndex())]",
+      "copy": {
+        "name": "dataNodeDiskLoop",
+        "count": "[parameters('vmCount')]"
+      },
+      "apiVersion": "[parameters('templateAPIVersion')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('scriptsUri'), '/dhcp/dynamic-disks.json')]",
+          "contentVersion": "1.0.0.1"
+        },
+        "parameters": {
+          "numDataDisks": {
+            "value":"[variables('dataDisksPerNode')]"
+          },
+          "diskCaching": {
+            "value":"None"
+          },
+          "diskStorageAccountName": {
+            "value":"[concat(variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')))]"
+          },
+          "diskSizeGB": {
+            "value":"[variables('dataDiskSize')]"  
+          }, 
+          "diskNamePrefix": {
+            "value":"[concat(variables('vmName'), copyIndex(), '-')]"  
+          }  
+        }
+      }
+    },
+    {
+      "apiVersion": "[parameters('resourceAPIVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vmName'), copyIndex())]",
       "location": "[parameters('location')]",
@@ -213,7 +248,8 @@
         "count": "[parameters('vmCount')]"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]"
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]",
+        "[concat('Microsoft.Resources/deployments/', variables('vmName'), '-disks-', copyIndex())]"
       ],
       "properties": {
         "availabilitySet": {
@@ -244,53 +280,7 @@
             "caching": "ReadWrite",
             "createOption": "FromImage"
           },
-          "dataDisks": [
-            {
-              "name": "datadisk0",
-              "diskSizeGB": "[variables('dataDiskSize')]",
-              "lun": 0,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds0/', variables('vmName'), copyIndex(), '-datadisk0.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk1",
-              "diskSizeGB": "[variables('dataDiskSize')]",
-              "lun": 1,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds1/', variables('vmName'), copyIndex(), '-datadisk1.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk2",
-              "diskSizeGB": "[variables('dataDiskSize')]",
-              "lun": 2,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds2/', variables('vmName'), copyIndex(), '-datadisk2.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk3",
-              "diskSizeGB": "[variables('dataDiskSize')]",
-              "lun": 3,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds3/', variables('vmName'), copyIndex(), '-datadisk3.vhd')]"
-              },
-              "createOption": "Empty"
-            },
-            {
-              "name": "datadisk4",
-              "diskSizeGB": "[variables('dataDiskSize')]",
-              "lun": 4,
-              "vhd": {
-                "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds4/', variables('vmName'), copyIndex(), '-datadisk4.vhd')]"
-              },
-              "createOption": "Empty"
-            }
-          ]
+          "dataDisks": "[reference(concat('Microsoft.Resources/deployments/', variables('vmName'), '-disks-', copyIndex())).outputs.dataDiskArray.value]"
         },
         "networkProfile": {
           "networkInterfaces": [

@@ -48,7 +48,7 @@
         "Premium_LRS"
       ],    
       "metadata": {
-        "description": "Storage type for cluster data nodes data disks."
+        "description": "Storage type for cluster data nodes data disks"
       }        
     },  
     "dataDiskSize":{
@@ -60,9 +60,18 @@
         "128"
       ],    
       "metadata": {
-        "description": "Data disk size for cluster data nodes."
+        "description": "Data disk size for cluster data nodes"
       }        
-    },      
+    },  
+    "dataDisksPerNode":{
+      "type": "string",
+      "defaultValue": "6",
+      "minValue": 2,
+      "maxValue": 10,    
+      "metadata": {
+        "description": "Number of data disks per data node in cluster"
+      }        
+    },
     "vNetName": {
       "type": "string",
       "defaultValue": "DesignatedVNet",
@@ -232,7 +241,8 @@
     "storageAccount": {
       "prefix": "[variables('uniqueIDString')]",
       "type": "[variables('storageAccountType')]",
-      "dataDiskSize":"[parameters('dataDiskSize')]",     
+      "dataDiskSize":"[parameters('dataDiskSize')]",
+      "dataDisksPerNode":"[parameters('dataDisksPerNode')]",    
       "disksPerAccount" : "[variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount]",
       "countAll":  "[add(div(variables('clusterSizes')[parameters('clusterSize')].numberOfDataNodes, variables('clusterSizes')['common'].numberOfDataDisksPerStorageAccount),1)]"   
     },  
