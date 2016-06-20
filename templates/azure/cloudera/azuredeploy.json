@@ -180,27 +180,17 @@
     "location": "eastus2",
     "storageAccountType": "Premium_LRS",
     "virtualNetworkName": "[parameters('vNetName')]",
-    "vnetNewOrExisting": "existing",
     "virtualNetworkRGName": "[parameters('vNetResourceGroup')]",
     "subnetName": "[parameters('vNetSubnet')]",
-    "addressPrefix": "10.3.0.0/16",
-    "subnetPrefix": "10.3.0.0/16",
-    "masterNodeIPAddress":  "10.3.0.4",
-    "dataNodeIPOffSetFromMaster": 5,  
     "tshirtSize": "Eval",
     "vmSize": "[parameters('virtualMachineSize')]",   
     "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/linearDHCPCustomImage/templates/azure/cloudera",
-    "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-', variables('vnetNewOrExisting'), '-vnet.json')]",
+    "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-existing-vnet.json')]",
     "storage-accountsUri": "[concat(variables('scriptsUri'), '/storage-accounts.json')]",   
     "data-nodeUri":"[concat(variables('scriptsUri'), '/dhcp/data-node-linear-', toLower(parameters('clusterSize')), '.json')]",
     "masterCustomImage":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/', parameters('customImagePathMaster'))]",
     "nodeCustomImage":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/', parameters('customImagePathNode'))]",
     "customImageOSDiskContainer":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/computevhds/')]",  
-    "sa": "[variables('masterNodeIPAddress')]",
-    "ipOctet01": "[concat(split(variables('sa'), '.')[0], '.', split(variables('sa'), '.')[1], '.')]",
-    "ipOctet2": "[int(split(variables('sa'), '.')[2])]",
-    "ipOctet3": "[int(split(variables('sa'), '.')[3])]",
-    "datanodeIpOctet3":"[add(int(split(variables('sa'), '.')[3]), variables('dataNodeIPOffSetFromMaster'))]",
     "clusterSizes": {
         "common": {
             "numberOfDataDisksPerStorageAccount" : 6
@@ -240,22 +230,11 @@
       "dataNodeASName": "[concat(variables('dnsNamePrefix'), '-dnAS')]"
     },
     "networkSpec": {
-      "addressPrefix": "[variables('addressPrefix')]",
-      "subnetPrefix": "[variables('subnetPrefix')]",
-      "ipOctet01": "[variables('ipOctet01')]",
-      "ipOctet2": "[variables('ipOctet2')]",
-      "ipOctet3": "[variables('ipOctet3')]",
-      "datanodeIpOctet3":"[variables('datanodeIpOctet3')]",
-      "masterIP":"[variables('sa')]",
-      "workerIP":"[concat(variables('ipOctet01'), add(variables('ipOctet2'), div(variables('datanodeIpOctet3'), 255)), '.', mod(variables('datanodeIpOctet3'), 255))]",
       "virtualNetworkName": "[variables('virtualNetworkName')]",
       "virtualNetworkRGName":"[variables('virtualNetworkRGName')]",
-      "vnetNewOrExisting": "[variables('vnetNewOrExisting')]",
       "virtualNetworkSubnetName": "[variables('subnetName')]"
     },
-    "newVNetId":"[resourceId(concat('Microsoft.Network','/','virtualNetworks'),variables('virtualNetworkName'))]",
-    "existingVNetId":"[resourceId(variables('virtualNetworkRGName'),concat('Microsoft.Network','/','virtualNetworks'),variables('virtualNetworkName'))]",
-    "VNetId": "[variables(concat(variables('vnetNewOrExisting'),'VNetId'))]"
+    "VNetId": "[resourceId(variables('virtualNetworkRGName'),concat('Microsoft.Network','/','virtualNetworks'),variables('virtualNetworkName'))]"
   },
   "resources": [
     {
