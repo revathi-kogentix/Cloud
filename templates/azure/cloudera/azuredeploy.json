@@ -224,7 +224,7 @@
     "customImageMasterDataDiskContainerPrefix":"[concat('http://', parameters('customImageAccount'), '.blob.core.windows.net/vhdsmn')]",  
     "clusterSizes": {
         "common": {
-            "numberOfDataNodesPerStorageAccount" : 7
+            "numberOfDataNodesPerStorageAccount" : "[div(35840, mul(int(parameters('dataDiskSize')),parameters('dataDisksPerNode')))]",
         }, 
         "S5": {
             "numberOfDataNodes": 4
