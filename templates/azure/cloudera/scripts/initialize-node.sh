@@ -69,7 +69,9 @@ service ntpd start
 service ntpd status
 chkconfig ntpd on
 
-yum install -y microsoft-hyper-v
+# Disable Linux Integration Services install as current verison 4.1 creates Kernel Panic (Reproduce CentOS6 & RHEL6)
+#   ref: https://access.redhat.com/solutions/1554193 https://blogs.technet.microsoft.com/virtualization/2016/03/21/linux-integration-services-4-1/
+# yum install -y microsoft-hyper-v
 
 echo never | tee -a /sys/kernel/mm/transparent_hugepage/enabled
 echo "echo never | tee -a /sys/kernel/mm/transparent_hugepage/enabled" | tee -a /etc/rc.local
