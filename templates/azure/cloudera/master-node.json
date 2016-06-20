@@ -304,8 +304,7 @@
         "count": "[parameters('vmCount')]"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]",
-        "Microsoft.Resources/deployments/os-selectorMaster"  
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]"
       ],
       "properties": {
         "availabilitySet": {
