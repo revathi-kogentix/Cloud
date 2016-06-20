@@ -47,6 +47,7 @@
     "nicName": "[concat(variables('vmName'), '-nic')]",
     "storageAccountName": "[parameters('storageAccount').prefix]",
     "disksPerAccount": "[parameters('storageAccount').disksPerAccount]",
+    "dataDiskSize": "[parameters('storageAccount').dataDiskSize]",  
     "publicIPAddressName": "[concat(variables('vmName'), '-publicIP')]",
     "securityGroupName": "[concat(parameters('dnsNamePrefix'), '-dn-sg')]"
   },
@@ -247,7 +248,7 @@
           "dataDisks": [
             {
               "name": "datadisk0",
-              "diskSizeGB": "1023",
+              "diskSizeGB": "[variables('dataDiskSize')]",
               "lun": 0,
               "vhd": {
                 "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds0/', variables('vmName'), copyIndex(), '-datadisk0.vhd')]"
@@ -256,7 +257,7 @@
             },
             {
               "name": "datadisk1",
-              "diskSizeGB": "1023",
+              "diskSizeGB": "[variables('dataDiskSize')]",
               "lun": 1,
               "vhd": {
                 "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds1/', variables('vmName'), copyIndex(), '-datadisk1.vhd')]"
@@ -265,7 +266,7 @@
             },
             {
               "name": "datadisk2",
-              "diskSizeGB": "1023",
+              "diskSizeGB": "[variables('dataDiskSize')]",
               "lun": 2,
               "vhd": {
                 "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds2/', variables('vmName'), copyIndex(), '-datadisk2.vhd')]"
@@ -274,7 +275,7 @@
             },
             {
               "name": "datadisk3",
-              "diskSizeGB": "1023",
+              "diskSizeGB": "[variables('dataDiskSize')]",
               "lun": 3,
               "vhd": {
                 "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds3/', variables('vmName'), copyIndex(), '-datadisk3.vhd')]"
@@ -283,7 +284,7 @@
             },
             {
               "name": "datadisk4",
-              "diskSizeGB": "1023",
+              "diskSizeGB": "[variables('dataDiskSize')]",
               "lun": 4,
               "vhd": {
                 "Uri": "[concat('http://', variables('storageAccountName'), div(copyIndex(),variables('disksPerAccount')), '.blob.core.windows.net/vhds4/', variables('vmName'), copyIndex(), '-datadisk4.vhd')]"
