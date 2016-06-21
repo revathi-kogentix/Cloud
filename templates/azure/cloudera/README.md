@@ -2,15 +2,15 @@
 Once the trial has concluded, the Cloudera Enterprise features will be disabled until you obtain and upload a license.
 
 # By clicking "Deploy to Azure" you agree to the Terms and Conditions below.
-# DS14 Deployment(use this if you are not sure)
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAjayDec%2FCloud%2Fmaster%2Ftemplates%2Fazure%2Fcloudera%2Fazuredeploy.json" target="_blank">
+# DS13/DS14 Deployment(use this if you are not sure)
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAjayDec%2FCloud%2FlinearDHCPCustomImage%2Ftemplates%2Fazure%2Fcloudera%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png" />
 </a>
 
-# DS13 Deployment(smaller size machine for batch and poc)
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAjayDec%2FCloud%2Fmaster%2Ftemplates%2Fazure%2Fcloudera%2Fds13.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png" />
+<a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/AjayDec/Cloud/c87bea3a3623a20e36b2b669c03baa89341cf489/templates/azure/cloudera/azuredeploy.json" target="_blank">
+  <img src="http://armviz.io/visualizebutton.png"/>
 </a>
+
 
 Version 2015-08-06
 
@@ -81,20 +81,21 @@ The template expects the following parameters:
 
 | Name   | Description | Default Value |
 |:--- |:---|:---|
+| CLUSTERSIZE  | S5 (means 1 master + 4 data nodes), S9, S17 | S5 |
 | adminUsername  | Administrator user name used when provisioning virtual machines | testuser |
 | adminPassword  | Administrator password used when provisioning virtual machines | Eur32#1e |
 | cmUsername | Cloudera Manager username | cmadmin |
 | cmPassword | Cloudera Manager password | cmpassword |
-| storageAccountPrefix | Unique namespace for the Storage Account where the Virtual Machine's disks will be placed | defaultStorageAccountPrefix |
-| numberOfDataNodes | Number of data nodes to provision in the cluster | 3 |
-| dnsNamePrefix | Unique public dns name where the Virtual Machines will be exposed | defaultDnsNamePrefix |
-| region | Azure data center location where resources will be provisioned |  |
-| storageAccountType | The type of the Storage Account to be created | Premium_LRS |
-| virtualNetworkName | The name of the virtual network provisioned for the deployment | clouderaVnet |
-| subnetName | Subnet name for the virtual network where resources will be provisioned | clouderaSubnet |
-| tshirtSize | T-shirt size of the Cloudera cluster (Eval, Prod) | Eval |
-| vmSize | The size of the VMs deployed in the cluster (Defaults to Standard_DS14) | Standard_DS14 |
-
+| STORAGEACCOUNTTYPE | Data disks storage type Premium_LRS, or Standard_LRS | Premium_LRS |
+| dataDiskSize | Data disks size in GB, 1023 or 512 or 128 | 1023 |
+| dataDisksPerNode | Number of data disks assigned data node in cluster | 6 |
+| vNetName | Existing vNet name for cluster | DesignatedVNet |
+| vNetResourceGroup | Existing vNet resource group | DesignatedVNetResourceGroup |
+| vNetSubnet | Existing vNet subnet for cluster | clouderasubnet |
+| customImageAccount | StorageAccount with Custom Images (machine disks are created under 'computevhds', vhdmns[0-3] containers) | DesignatedVNet |
+| customImagePathMaster | Master custom image path | DesignatedVNetResourceGroup |
+| customImagePathNode | Node custom image path |  |
+| virtualMachineSize | Virtual machine size for cluster nodes |  |
 
 Topology
 --------
@@ -108,7 +109,7 @@ The following table outlines the deployment topology characteristics for each su
 | T-Shirt Size | Member Node VM Size | CPU Cores | Memory | Data Disks | # of Master Node VMs | Services Placement of Master Node |
 |:--- |:---|:---|:---|:---|:---|:---|:---|
 | Eval | Standard_DS14 | 10 | 112 GB | 10x1000 GB | 1 | 1 (primary, secondary, cloudera manager) |
-| Prod | Standard_DS14 | 10 | 112 GB | 10x1000 GB | 3 | 1 primary, 1 standby (HA), 1 cloudera manager |
+| Prod (Not Supported with this template) | Standard_DS14 | 10 | 112 GB | 10x1000 GB | 3 | 1 primary, 1 standby (HA), 1 cloudera manager |
 
 ##Connecting to the cluster
 The machines are named according to a specific pattern.  The master node is named based on parameters and using the.

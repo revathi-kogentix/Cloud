@@ -60,7 +60,7 @@
         "128"
       ],    
       "metadata": {
-        "description": "Data disk size for cluster data nodes"
+        "description": "Data disk size in GB for cluster data nodes"
       }        
     },  
     "dataDisksPerNode":{
