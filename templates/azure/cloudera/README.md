@@ -138,6 +138,8 @@ Once the deployment is complete, you can navigate to the Cloudera portal to watc
 	http://[dnsNamePrefix]-mn0.[region].cloudapp.azure.com:7180
 
 ##Notes, Known Issues & Limitations
-- All nodes in the cluster have a public IP address.
+- The master node in the cluster have a public IP address.
+- Once deployment finishes. Login to CM WebUI, and suppress the FQDN alert on all hosts, to bring cluster to green stage.
+- Optimize java heap size based on your harwardware configuration to resolve few warnings.
 - The deployment script is not yet idempotent and cannot handle updates (although it currently works for initial provisioning only)
 - SSH key is not yet implemented and the template currently takes a password for the admin user
