@@ -120,3 +120,22 @@ else
     python cmxDeployOnIbiza.py -n "$ClusterName" -u $User -p $Password  -m "$mip" -w "$worker_ip" -c $cmUser -s $cmPassword -e -r "$EMAILADDRESS" -b "$BUSINESSPHONE" -f "$FIRSTNAME" -t "$LASTNAME" -o "$JOBROLE" -i "$JOBFUNCTION" -y "$COMPANY" -v "$VMSIZE">> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
 fi
 log "END: CM deployment ended"
+
+#Adding post depoly customizations
+log "BEGIN: Customizations - starting"
+curl -X PUT -H "Content-Type:application/json" -u $cmUser:$cmPassword "http://localhost:7180/api/v1/clusters/$ClusterName/services/hdfs/config" --data '{"roleTypeConfigs": [
+    {"roleType" : "NAMENODE",
+     "items" : [ {
+      "name" : "namenode_java_heapsize",
+      "value" : "8589934592"
+    }]},
+    {"roleType" : "SECONDARYNAMENODE",
+     "items" : [ {
+      "name" : "secondary_namenode_java_heapsize",
+      "value" : "8589934592"
+    }]}
+]}' >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
+
+
+curl -X POST -u $cmUser:$cmPassword http://localhost:7180/api/v1/clusters/$ClusterName/services/hdfs/commands/restart >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
+log "END: Customizations ended"

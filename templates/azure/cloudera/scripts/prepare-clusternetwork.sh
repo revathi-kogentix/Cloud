@@ -18,13 +18,15 @@ function log {
   echo "$(date): [${execname}] $@" 
 }
 
-function updateEtcHosts { 
-    echo "$HOSTIP ${NAMEPREFIX}-mn0.$NAMESUFFIX ${NAMEPREFIX}-mn0"
+function updateEtcHosts {
+    local LocalResolve=`host ${NAMEPREFIX}-mn0 | cut -d ' ' f1 | sed 's/^[^.]*\.//'`
+    echo "$HOSTIP ${NAMEPREFIX}-mn0.$LocalResolve ${NAMEPREFIX}-mn0"
+    local LocalResolveDataNode=`hostname -f | sed 's/^[^.]*\.//'`
     IFS=",";read -r -a ips <<< "$@"    
     i=0
     for ip in "${ips[@]}"
     do 
-        echo  "$ip ${NAMEPREFIX}-dn$i.$NAMESUFFIX ${NAMEPREFIX}-dn$i" 
+        echo  "$ip ${NAMEPREFIX}-dn$i.$LocalResolveDataNode ${NAMEPREFIX}-dn$i" 
         let "i = i + 1"
     done
 }
