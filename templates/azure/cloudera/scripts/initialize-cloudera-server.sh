@@ -123,6 +123,12 @@ log "END: CM deployment ended"
 
 #Adding post depoly customizations
 log "BEGIN: Customizations - starting"
+
+for i in $(curl -s  -u $cmUser:$cmPassword 'http://localhost:7180/api/v1/hosts' |grep hostId |grep -o -E [0-9a-f]{8}\(-[0-9a-f]{4}\){3}-[0-9a-f]{12}); do
+    curl -X PUT  -H "Content-Type:application/json"  -u $cmUser:$cmPassword   "http://localhost:7180/api/v1/hosts/$i/config"    --data   '{"items": [{                                  "name" : "host_health_suppression_host_dns_resolution",
+    "value" : "true"  }]}'; 
+done;  >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
+
 curl -X PUT -H "Content-Type:application/json" -u $cmUser:$cmPassword "http://localhost:7180/api/v1/clusters/$ClusterName/services/hdfs/config" --data '{"roleTypeConfigs": [
     {"roleType" : "NAMENODE",
      "items" : [ {
@@ -135,7 +141,6 @@ curl -X PUT -H "Content-Type:application/json" -u $cmUser:$cmPassword "http://lo
       "value" : "8589934592"
     }]}
 ]}' >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
-
 
 curl -X POST -u $cmUser:$cmPassword http://localhost:7180/api/v1/clusters/$ClusterName/services/hdfs/commands/restart >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
 log "END: Customizations ended"
