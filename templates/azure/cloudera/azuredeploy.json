@@ -214,7 +214,7 @@
     "subnetName": "[parameters('vNetSubnet')]",
     "tshirtSize": "Eval",
     "vmSize": "[parameters('virtualMachineSize')]",   
-    "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/linearDHCPCustomImageVNet/templates/azure/cloudera",
+    "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/linearDHCPCustomImageVnet/templates/azure/cloudera",
     "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-existing-vnet.json')]",
     "storage-accountsUri": "[concat(variables('scriptsUri'), '/storage-accounts.json')]",   
     "data-nodeUri":"[concat(variables('scriptsUri'), '/dhcp/data-node-linear-', toLower(parameters('clusterSize')), '.json')]",
