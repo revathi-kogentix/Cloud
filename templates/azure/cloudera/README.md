@@ -3,7 +3,7 @@ Once the trial has concluded, the Cloudera Enterprise features will be disabled 
 
 # By clicking "Deploy to Azure" you agree to the Terms and Conditions below.
 # DS13/DS14 Deployment(use this if you are not sure)
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAjayDec%2FCloud%2FlinearDHCPCustomImageVNet%2Ftemplates%2Fazure%2Fcloudera%2Fazuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAjayDec%2FCloud%2FlinearDHCPCustomImage%2Ftemplates%2Fazure%2Fcloudera%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png" />
 </a><a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/AjayDec/Cloud/c87bea3a3623a20e36b2b669c03baa89341cf489/templates/azure/cloudera/azuredeploy.json" target="_blank">
   <img src="http://armviz.io/visualizebutton.png"/>
