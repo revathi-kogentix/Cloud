@@ -102,8 +102,8 @@ log "END: master node deployments"
 
 
 
-# Set up python,  epel and pyhton are part of image
-# rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
+# Set up python,  (epel and pyhton can be part of image)
+rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm >> /tmp/initialize-cloudera-server.log 2>> /tmp/initialize-cloudera-server.err
 yum -y install python-pip >> /tmp/initialize-cloudera-server.log
 pip install cm_api >> /tmp/initialize-cloudera-server.log
 
