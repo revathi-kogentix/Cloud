@@ -9,7 +9,8 @@
         "S5",
         "S9",
         "S11",
-        "S17"
+        "S17",
+        "S21"
       ],    
       "metadata": {
         "description": "Cluster size, all nodes have 1 master node"
@@ -215,7 +216,7 @@
     "subnetName": "[parameters('vNetSubnet')]",
     "tshirtSize": "Eval",
     "vmSize": "[parameters('virtualMachineSize')]",   
-    "scriptsUri": "https://raw.githubusercontent.com/AjayDec/Cloud/linearDHCPCustomImageVnet/templates/azure/cloudera",
+    "scriptsUri": "https://raw.githubusercontent.com/revathi-kogentix/Cloud/linearDHCPCustomImageVnet/templates/azure/cloudera",
     "share-resourcesUri": "[concat(variables('scriptsUri'), '/shared-resources-existing-vnet.json')]",
     "storage-accountsUri": "[concat(variables('scriptsUri'), '/storage-accounts.json')]",   
     "data-nodeUri":"[concat(variables('scriptsUri'), '/dhcp/data-node-linear-', toLower(parameters('clusterSize')), '.json')]",
@@ -238,6 +239,9 @@
         },
         "S17": {
             "numberOfDataNodes": 16
+        },
+        "S21": {
+            "numberOfDataNodes": 20
         }        
     },  
     "storageAccount": {
