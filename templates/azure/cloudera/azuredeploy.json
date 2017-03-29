@@ -117,6 +117,7 @@
       "allowedValues": [
         "Standard_DS13",
         "Standard_DS14"
+        "Standard DS14 v2"
       ],    
       "metadata": {
         "description": "Virtual machine size for cluster nodes"
