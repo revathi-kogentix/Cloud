@@ -4,7 +4,7 @@
   "parameters": {
     "clusterSize": {
       "type": "string",
-      "defaultValue": "S5",
+  "defaultValue": "S5",
       "allowedValues": [
         "S5",
         "S9",
@@ -116,7 +116,7 @@
       "defaultValue": "Standard_DS14",
       "allowedValues": [
         "Standard_DS13",
-        "Standard_DS14"
+        "Standard_DS14",
         "Standard_DS14_v2"
       ],    
       "metadata": {
